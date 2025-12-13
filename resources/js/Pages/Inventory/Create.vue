@@ -98,6 +98,7 @@ watch(() => form.type, () => {
                                 <label class="block text-sm font-medium text-gray-700">Price (€)</label>
                                 <input
                                     type="number"
+                                    min="0"
                                     step="0.01"
                                     v-model="form.price"
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
@@ -110,6 +111,7 @@ watch(() => form.type, () => {
                                 <label class="block text-sm font-medium text-gray-700">Stock</label>
                                 <input
                                     type="number"
+                                    min="0"
                                     v-model="form.stock"
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                     required
@@ -166,7 +168,7 @@ watch(() => form.type, () => {
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700">GPIO Count</label>
-                                    <input type="number" v-model="form.gpio_count" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
+                                    <input type="number" min="0" v-model="form.gpio_count" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
                                     <div v-if="form.errors.gpio_count" class="text-red-600 text-sm mt-1">{{ form.errors.gpio_count }}</div>
                                 </div>
                             </div>

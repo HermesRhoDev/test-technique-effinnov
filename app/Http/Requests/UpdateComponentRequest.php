@@ -51,7 +51,7 @@ class UpdateComponentRequest extends FormRequest
             'voltage_rating' => 'required_if:type,capacitor|nullable|string',
             'clock_speed' => 'required_if:type,microcontroller|nullable|string',
             'architecture' => 'required_if:type,microcontroller|nullable|string',
-            'gpio_count' => 'required_if:type,microcontroller|nullable|integer',
+            'gpio_count' => 'required_if:type,microcontroller|nullable|integer|min:0',
         ];
     }
 }

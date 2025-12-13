@@ -45,7 +45,7 @@ class InventoryManager
         }
 
         // Check if new reference already exists (if changed)
-        if ($originalReference !== $updatedComponent->getReference() &&
+        if ($originalReference !== $updatedComponent->getReference() && 
             ComponentModel::where('reference', $updatedComponent->getReference())->exists()) {
             throw new \RuntimeException("Component with reference {$updatedComponent->getReference()} already exists.");
         }
