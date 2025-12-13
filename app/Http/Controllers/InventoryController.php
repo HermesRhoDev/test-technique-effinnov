@@ -22,9 +22,10 @@ class InventoryController extends Controller
 
     public function index(): Response
     {
-        $components = $this->inventoryManager->getAllComponents();
+        $paginator = $this->inventoryManager->getPaginatedComponents(10);
 
-        $data = array_map(fn($c) => [
+        // Transform the collection items within the paginator
+        $paginator->getCollection()->transform(fn($c) => [
             'name' => $c->getName(),
             'reference' => $c->getReference(),
             'price' => $c->getPrice(),
@@ -32,10 +33,10 @@ class InventoryController extends Controller
             'type' => $c->getType()->value,
             'specifications' => $c->getSpecifications(),
             'formatted_specs' => $c->getFormattedSpecs(),
-        ], $components);
+        ]);
 
         return Inertia::render('Inventory/Index', [
-            'components' => $data
+            'components' => $paginator
         ]);
     }
 

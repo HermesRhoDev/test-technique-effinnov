@@ -7,6 +7,8 @@ use App\Core\Inventory\Factories\ComponentFactory;
 use App\Core\Inventory\Interfaces\ElectronicComponentInterface;
 use App\Models\Component as ComponentModel;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+
 class InventoryManager
 {
     public function addComponent(ElectronicComponentInterface $component): void
@@ -45,7 +47,7 @@ class InventoryManager
         }
 
         // Check if new reference already exists (if changed)
-        if ($originalReference !== $updatedComponent->getReference() && 
+        if ($originalReference !== $updatedComponent->getReference() &&
             ComponentModel::where('reference', $updatedComponent->getReference())->exists()) {
             throw new \RuntimeException("Component with reference {$updatedComponent->getReference()} already exists.");
         }
@@ -73,6 +75,21 @@ class InventoryManager
         return ComponentModel::all()
             ->map(fn ($model) => $this->modelToDomainObject($model))
             ->all();
+    }
+
+    /**
+     * @param int $perPage
+     * @return LengthAwarePaginator
+     */
+    public function getPaginatedComponents(int $perPage = 10): LengthAwarePaginator
+    {
+        $paginator = ComponentModel::paginate($perPage);
+
+        $paginator->getCollection()->transform(function ($model) {
+            return $this->modelToDomainObject($model);
+        });
+
+        return $paginator;
     }
 
     /**

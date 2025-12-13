@@ -3,15 +3,22 @@ import { Head, Link, router } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 
 defineProps<{
-    components: Array<{
-        name: string;
-        reference: string;
-        price: number;
-        stock: number;
-        type: string;
-        specifications: Record<string, any>;
-        formatted_specs: string;
-    }>;
+    components: {
+        data: Array<{
+            name: string;
+            reference: string;
+            price: number;
+            stock: number;
+            type: string;
+            specifications: Record<string, any>;
+            formatted_specs: string;
+        }>;
+        links: Array<{
+            url: string | null;
+            label: string;
+            active: boolean;
+        }>;
+    };
 }>();
 
 const deleteComponent = (reference: string) => {
@@ -58,7 +65,7 @@ const deleteComponent = (reference: string) => {
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
-                                    <tr v-for="component in components" :key="component.reference">
+                                    <tr v-for="component in components.data" :key="component.reference">
                                         <td class="px-6 py-4 whitespace-nowrap font-mono text-sm">{{ component.reference }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900">{{ component.name }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 capitalize">{{ component.type }}</td>
@@ -82,13 +89,33 @@ const deleteComponent = (reference: string) => {
                                             </button>
                                         </td>
                                     </tr>
-                                    <tr v-if="components.length === 0">
+                                    <tr v-if="components.data.length === 0">
                                         <td colspan="7" class="px-6 py-4 text-center text-gray-500">
                                             No components found.
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div v-if="components.links.length > 3" class="flex justify-center mt-6">
+                            <div class="flex flex-wrap -mb-1">
+                                <template v-for="(link, key) in components.links" :key="key">
+                                    <div
+                                        v-if="link.url === null"
+                                        class="mr-1 mb-1 px-4 py-3 text-sm leading-4 text-gray-400 border rounded"
+                                        v-html="link.label"
+                                    />
+                                    <Link
+                                        v-else
+                                        class="mr-1 mb-1 px-4 py-3 text-sm leading-4 border rounded hover:bg-white focus:border-indigo-500 focus:text-indigo-500"
+                                        :class="{ 'bg-blue-600 text-white': link.active, 'bg-white': !link.active }"
+                                        :href="link.url"
+                                        v-html="link.label"
+                                    />
+                                </template>
+                            </div>
                         </div>
                     </div>
                 </div>
