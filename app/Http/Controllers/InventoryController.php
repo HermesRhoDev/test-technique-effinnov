@@ -31,6 +31,7 @@ class InventoryController extends Controller
             'stock' => $c->getStock(),
             'type' => $c->getType()->value,
             'specifications' => $c->getSpecifications(),
+            'formatted_specs' => $c->getFormattedSpecs(),
         ], $components);
 
         return Inertia::render('Inventory/Index', [

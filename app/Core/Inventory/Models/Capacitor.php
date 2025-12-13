@@ -34,4 +34,9 @@ class Capacitor extends AbstractComponent
             'voltage_rating' => $this->voltageRating,
         ];
     }
+
+    public function getFormattedSpecs(): string
+    {
+        return "Capacitance: {$this->capacitanceValue}, Voltage: {$this->voltageRating}";
+    }
 }

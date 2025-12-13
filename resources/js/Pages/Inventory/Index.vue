@@ -10,6 +10,7 @@ defineProps<{
         stock: number;
         type: string;
         specifications: Record<string, any>;
+        formatted_specs: string;
     }>;
 }>();
 
@@ -17,12 +18,6 @@ const deleteComponent = (reference: string) => {
     if (confirm('Are you sure you want to delete this component?')) {
         router.delete(route('inventory.destroy', reference));
     }
-};
-
-const formatSpecs = (specs: Record<string, any>) => {
-    return Object.entries(specs)
-        .map(([key, value]) => `${key.replace('_', ' ')}: ${value}`)
-        .join(', ');
 };
 </script>
 
@@ -70,16 +65,16 @@ const formatSpecs = (specs: Record<string, any>) => {
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ component.price }} €</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ component.stock }}</td>
                                         <td class="px-6 py-4 text-sm text-gray-500">
-                                            {{ formatSpecs(component.specifications) }}
+                                            {{ component.formatted_specs }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                            <Link 
+                                            <Link
                                                 :href="route('inventory.edit', component.reference)"
                                                 class="text-indigo-600 hover:text-indigo-900 mr-4"
                                             >
                                                 Edit
                                             </Link>
-                                            <button 
+                                            <button
                                                 @click="deleteComponent(component.reference)"
                                                 class="text-red-600 hover:text-red-900"
                                             >

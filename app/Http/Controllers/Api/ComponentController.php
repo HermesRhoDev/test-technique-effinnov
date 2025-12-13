@@ -123,6 +123,7 @@ class ComponentController extends Controller
             'stock' => $component->getStock(),
             'type' => $component->getType()->value,
             'specifications' => $component->getSpecifications(),
+            'formatted_specs' => $component->getFormattedSpecs(),
         ];
     }
 }

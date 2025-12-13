@@ -12,6 +12,7 @@ interface ElectronicComponentInterface
     public function getStock(): int;
     public function getType(): ComponentType;
     public function getSpecifications(): array;
+    public function getFormattedSpecs(): string;
 
     public function addStock(int $quantity): void;
     public function removeStock(int $quantity): void;

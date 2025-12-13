@@ -65,7 +65,10 @@ abstract class AbstractComponent implements ElectronicComponentInterface
 
     // Force concrete classes to implement this
     abstract public function getType(): ComponentType;
-    
+
     // Force concrete classes to implement this
     abstract public function getSpecifications(): array;
+
+    // Force concrete classes to implement this
+    abstract public function getFormattedSpecs(): string;
 }

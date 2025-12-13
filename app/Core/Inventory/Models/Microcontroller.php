@@ -38,4 +38,9 @@ class Microcontroller extends AbstractComponent
             'gpio_count' => $this->gpioCount,
         ];
     }
+
+    public function getFormattedSpecs(): string
+    {
+        return "{$this->architecture} @ {$this->clockSpeed} ({$this->gpioCount} GPIOs)";
+    }
 }

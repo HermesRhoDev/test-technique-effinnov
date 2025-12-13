@@ -34,4 +34,9 @@ class Resistor extends AbstractComponent
             'power_rating' => $this->powerRating,
         ];
     }
+
+    public function getFormattedSpecs(): string
+    {
+        return "Resistance: {$this->resistanceValue}, Power: {$this->powerRating}";
+    }
 }
