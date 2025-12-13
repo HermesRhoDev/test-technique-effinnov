@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import '../css/app.css';
 import './bootstrap';
 
