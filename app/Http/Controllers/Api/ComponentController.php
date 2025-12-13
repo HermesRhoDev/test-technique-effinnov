@@ -24,9 +24,18 @@ class ComponentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        $components = $this->inventoryManager->getAllComponents();
+        $type = null;
+        if ($request->has('type')) {
+            try {
+                $type = ComponentType::from($request->query('type'));
+            } catch (\ValueError $e) {
+                return response()->json(['error' => 'Invalid component type'], 400);
+            }
+        }
+
+        $components = $this->inventoryManager->getAllComponents($type);
 
         // Transform domain objects to array for JSON response
         $data = array_map(fn($c) => $this->formatComponent($c), $components);

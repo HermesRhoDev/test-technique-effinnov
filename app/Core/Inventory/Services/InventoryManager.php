@@ -70,9 +70,15 @@ class InventoryManager
     /**
      * @return ElectronicComponentInterface[]
      */
-    public function getAllComponents(): array
+    public function getAllComponents(?ComponentType $type = null): array
     {
-        return ComponentModel::all()
+        $query = ComponentModel::query();
+
+        if ($type) {
+            $query->where('type', $type);
+        }
+
+        return $query->get()
             ->map(fn ($model) => $this->modelToDomainObject($model))
             ->all();
     }
@@ -81,9 +87,15 @@ class InventoryManager
      * @param int $perPage
      * @return LengthAwarePaginator
      */
-    public function getPaginatedComponents(int $perPage = 10): LengthAwarePaginator
+    public function getPaginatedComponents(int $perPage = 10, ?ComponentType $type = null): LengthAwarePaginator
     {
-        $paginator = ComponentModel::paginate($perPage);
+        $query = ComponentModel::query();
+
+        if ($type) {
+            $query->where('type', $type);
+        }
+
+        $paginator = $query->paginate($perPage);
 
         $paginator->getCollection()->transform(function ($model) {
             return $this->modelToDomainObject($model);

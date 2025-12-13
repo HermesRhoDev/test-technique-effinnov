@@ -20,9 +20,18 @@ class InventoryController extends Controller
         $this->inventoryManager = $inventoryManager;
     }
 
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        $paginator = $this->inventoryManager->getPaginatedComponents(10);
+        $type = null;
+        if ($request->has('type') && $request->input('type') !== '') {
+            try {
+                $type = ComponentType::from($request->input('type'));
+            } catch (\ValueError $e) {
+                // Ignore invalid type
+            }
+        }
+
+        $paginator = $this->inventoryManager->getPaginatedComponents(10, $type);
 
         // Transform the collection items within the paginator
         $paginator->getCollection()->transform(fn($c) => [
@@ -36,7 +45,9 @@ class InventoryController extends Controller
         ]);
 
         return Inertia::render('Inventory/Index', [
-            'components' => $paginator
+            'components' => $paginator,
+            'filters' => $request->only(['type']),
+            'types' => array_column(ComponentType::cases(), 'value'),
         ]);
     }
 
