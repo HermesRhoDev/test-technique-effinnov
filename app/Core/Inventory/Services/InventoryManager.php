@@ -3,31 +3,66 @@
 namespace App\Core\Inventory\Services;
 
 use App\Core\Inventory\Enums\ComponentType;
+use App\Core\Inventory\Factories\ComponentFactory;
 use App\Core\Inventory\Interfaces\ElectronicComponentInterface;
+use App\Models\Component as ComponentModel;
 
 class InventoryManager
 {
-    /**
-     * @var array<string, ElectronicComponentInterface>
-     */
-    private array $components = [];
-
     public function addComponent(ElectronicComponentInterface $component): void
     {
-        if (isset($this->components[$component->getReference()])) {
+        if (ComponentModel::where('reference', $component->getReference())->exists()) {
             throw new \RuntimeException("Component with reference {$component->getReference()} already exists.");
         }
-        $this->components[$component->getReference()] = $component;
+
+        ComponentModel::create([
+            'name' => $component->getName(),
+            'reference' => $component->getReference(),
+            'price' => $component->getPrice(),
+            'stock' => $component->getStock(),
+            'type' => $component->getType(),
+            'specifications' => $component->getSpecifications(),
+        ]);
     }
 
     public function getComponent(string $reference): ?ElectronicComponentInterface
     {
-        return $this->components[$reference] ?? null;
+        $model = ComponentModel::where('reference', $reference)->first();
+
+        if (!$model) {
+            return null;
+        }
+
+        return $this->modelToDomainObject($model);
+    }
+
+    public function updateComponent(string $originalReference, ElectronicComponentInterface $updatedComponent): void
+    {
+        $model = ComponentModel::where('reference', $originalReference)->first();
+
+        if (!$model) {
+            throw new \RuntimeException("Component with reference {$originalReference} not found.");
+        }
+
+        // Check if new reference already exists (if changed)
+        if ($originalReference !== $updatedComponent->getReference() &&
+            ComponentModel::where('reference', $updatedComponent->getReference())->exists()) {
+            throw new \RuntimeException("Component with reference {$updatedComponent->getReference()} already exists.");
+        }
+
+        $model->update([
+            'name' => $updatedComponent->getName(),
+            'reference' => $updatedComponent->getReference(),
+            'price' => $updatedComponent->getPrice(),
+            'stock' => $updatedComponent->getStock(),
+            'type' => $updatedComponent->getType(),
+            'specifications' => $updatedComponent->getSpecifications(),
+        ]);
     }
 
     public function removeComponent(string $reference): void
     {
-        unset($this->components[$reference]);
+        ComponentModel::where('reference', $reference)->delete();
     }
 
     /**
@@ -35,7 +70,9 @@ class InventoryManager
      */
     public function getAllComponents(): array
     {
-        return array_values($this->components);
+        return ComponentModel::all()
+            ->map(fn ($model) => $this->modelToDomainObject($model))
+            ->all();
     }
 
     /**
@@ -43,9 +80,24 @@ class InventoryManager
      */
     public function getComponentsByType(ComponentType $type): array
     {
-        return array_filter(
-            $this->components,
-            fn (ElectronicComponentInterface $component) => $component->getType() === $type
+        return ComponentModel::where('type', $type)
+            ->get()
+            ->map(fn ($model) => $this->modelToDomainObject($model))
+            ->all();
+    }
+
+    private function modelToDomainObject(ComponentModel $model): ElectronicComponentInterface
+    {
+        $data = array_merge(
+            [
+                'name' => $model->name,
+                'reference' => $model->reference,
+                'price' => $model->price,
+                'stock' => $model->stock,
+            ],
+            $model->specifications ?? []
         );
+
+        return ComponentFactory::create($model->type, $data);
     }
 }
