@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { Head, Link, router } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import { ref, watch } from 'vue';
 
-defineProps<{
+const props = defineProps<{
     components: {
         data: Array<{
             name: string;
@@ -19,7 +20,24 @@ defineProps<{
             active: boolean;
         }>;
     };
+    filters: {
+        type: string;
+    };
+    types: string[];
 }>();
+
+const selectedType = ref(props.filters.type || '');
+
+watch(selectedType, (value) => {
+    router.get(
+        route('inventory.index'),
+        { type: value },
+        {
+            preserveState: true,
+            replace: true,
+        }
+    );
+});
 
 const deleteComponent = (reference: string) => {
     if (confirm('Are you sure you want to delete this component?')) {
@@ -40,7 +58,20 @@ const deleteComponent = (reference: string) => {
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="flex justify-end mb-6">
+                <div class="flex justify-between items-center mb-6">
+                    <div class="flex items-center">
+                        <label for="type-filter" class="mr-2 text-sm font-medium text-gray-700">Filter by Type:</label>
+                        <select
+                            id="type-filter"
+                            v-model="selectedType"
+                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                        >
+                            <option value="">All Types</option>
+                            <option v-for="type in types" :key="type" :value="type" class="capitalize">
+                                {{ type }}
+                            </option>
+                        </select>
+                    </div>
                     <Link
                         :href="route('inventory.create')"
                         class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"

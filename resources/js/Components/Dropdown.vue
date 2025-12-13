@@ -3,7 +3,7 @@ import { computed, onMounted, onUnmounted, ref } from 'vue';
 
 const props = withDefaults(
     defineProps<{
-        align?: 'left' | 'right';
+        align?: 'left' | 'right' | 'top';
         width?: '48';
         contentClasses?: string;
     }>(),
@@ -34,6 +34,8 @@ const alignmentClasses = computed(() => {
         return 'ltr:origin-top-left rtl:origin-top-right start-0';
     } else if (props.align === 'right') {
         return 'ltr:origin-top-right rtl:origin-top-left end-0';
+    } else if (props.align === 'top') {
+        return 'origin-bottom-left bottom-full mb-2 start-0';
     } else {
         return 'origin-top';
     }
