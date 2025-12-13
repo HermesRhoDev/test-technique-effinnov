@@ -6,8 +6,8 @@ use App\Core\Inventory\Enums\ComponentType;
 
 class Capacitor extends AbstractComponent
 {
-    private string $capacitanceValue; // e.g. "100µF"
-    private string $voltageRating;    // e.g. "16V"
+    private string $capacitanceValue;
+    private string $voltageRating;
 
     public function __construct(
         string $name,

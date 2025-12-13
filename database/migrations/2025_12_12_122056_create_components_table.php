@@ -18,7 +18,7 @@ return new class extends Migration
             $table->decimal('price', 10, 2); // Prix avec 2 décimales
             $table->integer('stock');
             $table->string('type'); // Pour stocker la valeur de l'enum
-            $table->json('specifications')->nullable(); // Pour les attributs spécifiques (résistance, capacité, etc.)
+            $table->json('specifications')->nullable(); // Pour les attributs spécifiques
             $table->timestamps();
         });
     }

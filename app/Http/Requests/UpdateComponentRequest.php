@@ -26,11 +26,7 @@ class UpdateComponentRequest extends FormRequest
     {
         // Get the reference from the route parameter
         $reference = $this->route('reference') ?? $this->route('component');
-        
-        // Find the component to get its ID for unique ignore
-        // If we are in API resource route, the parameter might be 'component' or 'reference' depending on config
-        // In web.php, it's {reference}. In api.php, we set parameters to 'reference'.
-        
+
         $componentId = null;
         if ($reference) {
             $component = Component::where('reference', $reference)->first();

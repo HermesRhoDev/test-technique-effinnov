@@ -53,7 +53,7 @@ class ComponentController extends Controller
         try {
             $type = ComponentType::from($validated['type']);
 
-            // Create domain object via Factory (validates business logic)
+            // Create domain object via Factory
             $component = ComponentFactory::create($type, $validated);
 
             // Persist via Manager

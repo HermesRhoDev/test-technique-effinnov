@@ -26,14 +26,12 @@ class InventoryController extends Controller
         if ($request->has('type') && $request->input('type') !== '') {
             try {
                 $type = ComponentType::from($request->input('type'));
-            } catch (\ValueError $e) {
-                // Ignore invalid type
-            }
+            } catch (\ValueError $e) {}
         }
 
         $paginator = $this->inventoryManager->getPaginatedComponents(10, $type);
 
-        // Transform the collection items within the paginator
+        /** @var \Illuminate\Pagination\LengthAwarePaginator $paginator */
         $paginator->getCollection()->transform(fn($c) => [
             'name' => $c->getName(),
             'reference' => $c->getReference(),

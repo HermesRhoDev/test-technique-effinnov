@@ -15,7 +15,7 @@ class ComponentFactory
      */
     public static function create(ComponentType $type, array $data): ElectronicComponentInterface
     {
-        // Common required fields
+        // Required fields
         if (!isset($data['name'], $data['reference'], $data['price'])) {
             throw new \InvalidArgumentException("Missing required common fields (name, reference, price)");
         }

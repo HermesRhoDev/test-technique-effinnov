@@ -11,12 +11,12 @@ const showingNavigationDropdown = ref(false);
 </script>
 
 <template>
-    <div class="min-h-screen bg-gray-100 flex">
+    <div class="min-h-screen bg-[#483c37] flex">
         <!-- Sidebar Navigation -->
-        <nav class="bg-white w-64 border-r border-gray-200 hidden sm:flex flex-col flex-shrink-0">
-            <div class="p-6 flex items-center justify-center border-b border-gray-200 h-16">
+        <nav class="bg-[#483c37] w-64 border-r border-[#94c24c] hidden sm:flex flex-col flex-shrink-0">
+            <div class="p-6 flex items-center justify-center border-b border-[#94c24c] h-16">
                 <Link :href="route('dashboard')">
-                    <ApplicationLogo class="block h-9 w-auto fill-current text-gray-800" />
+                    <ApplicationLogo class="block h-9 w-auto fill-current text-white" />
                 </Link>
             </div>
 
@@ -24,20 +24,20 @@ const showingNavigationDropdown = ref(false);
                 <NavLink
                     :href="route('dashboard')"
                     :active="route().current('dashboard')"
-                    class="w-full justify-start px-4 py-2"
+                    class="w-full justify-start px-4 py-2 text-white"
                 >
                     Dashboard
                 </NavLink>
                 <NavLink
                     :href="route('inventory.index')"
                     :active="route().current('inventory.*')"
-                    class="w-full justify-start px-4 py-2"
+                    class="w-full justify-start px-4 py-2 text-white"
                 >
-                    Inventory
+                    Inventaire
                 </NavLink>
             </div>
 
-            <div class="p-4 border-t border-gray-200">
+            <div class="p-4 border-t border-[#94c24c]">
                 <Dropdown align="top" width="48">
                     <template #trigger>
                         <span class="inline-flex rounded-md w-full">
@@ -65,10 +65,10 @@ const showingNavigationDropdown = ref(false);
 
                     <template #content>
                         <DropdownLink :href="route('profile.edit')">
-                            Profile
+                            Profil
                         </DropdownLink>
                         <DropdownLink :href="route('logout')" method="post" as="button">
-                            Log Out
+                            Se Déconnecter
                         </DropdownLink>
                     </template>
                 </Dropdown>
@@ -78,10 +78,10 @@ const showingNavigationDropdown = ref(false);
         <!-- Main Content Area -->
         <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
             <!-- Mobile Header -->
-            <nav class="bg-white border-b border-gray-200 sm:hidden">
+            <nav class="bg-[#483c37] border-b border-[#94c24c] sm:hidden">
                 <div class="px-4 h-16 flex items-center justify-between">
                     <Link :href="route('dashboard')">
-                        <ApplicationLogo class="block h-9 w-auto fill-current text-gray-800" />
+                        <ApplicationLogo class="block h-9 w-auto fill-current text-white" />
                     </Link>
                     <button
                         @click="showingNavigationDropdown = !showingNavigationDropdown"
@@ -116,7 +116,7 @@ const showingNavigationDropdown = ref(false);
                             Dashboard
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('inventory.index')" :active="route().current('inventory.*')">
-                            Inventory
+                            Inventaire
                         </ResponsiveNavLink>
                     </div>
 
@@ -132,10 +132,10 @@ const showingNavigationDropdown = ref(false);
 
                         <div class="mt-3 space-y-1">
                             <ResponsiveNavLink :href="route('profile.edit')">
-                                Profile
+                                Profil
                             </ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('logout')" method="post" as="button">
-                                Log Out
+                                Se Déconnecter
                             </ResponsiveNavLink>
                         </div>
                     </div>
@@ -143,7 +143,7 @@ const showingNavigationDropdown = ref(false);
             </nav>
 
             <!-- Page Heading -->
-            <header class="bg-white shadow" v-if="$slots.header">
+            <header class="bg-[#483c37] shadow" v-if="$slots.header">
                 <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                     <slot name="header" />
                 </div>

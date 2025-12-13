@@ -35,16 +35,16 @@ const submit = () => {
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Edit Component
+            <h2 class="font-semibold text-xl text-white leading-tight">
+                Modifier le composant
             </h2>
         </template>
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="mb-6">
-                    <Link :href="route('inventory.index')" class="text-blue-600 hover:text-blue-800">
-                        &larr; Back to Inventory
+                    <Link :href="route('inventory.index')" class="text-[#94c24c] hover:text-[#83a842]">
+                        &larr; Retour à l'inventaire
                     </Link>
                 </div>
 
@@ -170,7 +170,7 @@ const submit = () => {
                         <div class="flex justify-end">
                             <button
                                 type="submit"
-                                class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
+                                class="bg-[#94c24c] text-white px-6 py-2 rounded hover:bg-[#83a842] transition"
                                 :disabled="form.processing"
                             >
                                 {{ form.processing ? 'Saving...' : 'Update Component' }}

@@ -14,8 +14,8 @@ class ComponentSeeder extends Seeder
      */
     public function run(): void
     {
-        // Nettoyage de la table avant insertion (optionnel, selon préférence)
-        // Component::truncate(); 
+        // Clean datas before seeding
+        Component::truncate();
 
         $components = [
             // --- RESISTORS ---
@@ -186,10 +186,10 @@ class ComponentSeeder extends Seeder
         ];
 
         foreach ($components as $data) {
-            // Utiliser updateOrCreate pour éviter les doublons si on relance le seeder
+            // Update or create component
             Component::updateOrCreate(
-                ['reference' => $data['reference']], // Clé de recherche
-                $data // Données à mettre à jour ou créer
+                ['reference' => $data['reference']],
+                $data
             );
         }
     }

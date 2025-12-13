@@ -28,12 +28,6 @@ const form = useForm({
 const submit = () => {
     form.post(route('inventory.store'));
 };
-
-// Reset specific fields when type changes? Optional but good for UX.
-watch(() => form.type, () => {
-    // Keep common fields, maybe clear others?
-    // keeping it simple for now.
-});
 </script>
 
 <template>
@@ -41,16 +35,16 @@ watch(() => form.type, () => {
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Add New Component
+            <h2 class="font-semibold text-xl text-white leading-tight">
+                Ajouter un nouveau composant
             </h2>
         </template>
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="mb-6">
-                    <Link :href="route('inventory.index')" class="text-blue-600 hover:text-blue-800">
-                        &larr; Back to Inventory
+                    <Link :href="route('inventory.index')" class="text-[#94c24c] hover:text-[#83a842]">
+                        &larr; Retour à l'inventaire
                     </Link>
                 </div>
 
@@ -84,7 +78,7 @@ watch(() => form.type, () => {
                             </div>
 
                             <div>
-                                <label class="block text-sm font-medium text-gray-700">Name</label>
+                                <label class="block text-sm font-medium text-gray-700">Nom</label>
                                 <input
                                     type="text"
                                     v-model="form.name"
@@ -95,7 +89,7 @@ watch(() => form.type, () => {
                             </div>
 
                             <div>
-                                <label class="block text-sm font-medium text-gray-700">Price (€)</label>
+                                <label class="block text-sm font-medium text-gray-700">Prix (€)</label>
                                 <input
                                     type="number"
                                     min="0"
@@ -122,15 +116,15 @@ watch(() => form.type, () => {
 
                         <!-- Dynamic Fields -->
                         <div v-if="form.type === 'resistor'" class="bg-gray-50 p-4 rounded-lg mb-6">
-                            <h3 class="font-semibold mb-4 text-gray-700">Resistor Specifications</h3>
+                            <h3 class="font-semibold mb-4 text-gray-700">Spécifications Résistance</h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700">Resistance Value</label>
+                                    <label class="block text-sm font-medium text-gray-700">Valeur de la Résistance</label>
                                     <input type="text" v-model="form.resistance_value" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
                                     <div v-if="form.errors.resistance_value" class="text-red-600 text-sm mt-1">{{ form.errors.resistance_value }}</div>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700">Power Rating</label>
+                                    <label class="block text-sm font-medium text-gray-700">Énergie Consommé</label>
                                     <input type="text" v-model="form.power_rating" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
                                     <div v-if="form.errors.power_rating" class="text-red-600 text-sm mt-1">{{ form.errors.power_rating }}</div>
                                 </div>
@@ -138,15 +132,15 @@ watch(() => form.type, () => {
                         </div>
 
                         <div v-if="form.type === 'capacitor'" class="bg-gray-50 p-4 rounded-lg mb-6">
-                            <h3 class="font-semibold mb-4 text-gray-700">Capacitor Specifications</h3>
+                            <h3 class="font-semibold mb-4 text-gray-700">Spécifications Capaciteur</h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700">Capacitance Value</label>
+                                    <label class="block text-sm font-medium text-gray-700">Valeur de la Capacité</label>
                                     <input type="text" v-model="form.capacitance_value" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
                                     <div v-if="form.errors.capacitance_value" class="text-red-600 text-sm mt-1">{{ form.errors.capacitance_value }}</div>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700">Voltage Rating</label>
+                                    <label class="block text-sm font-medium text-gray-700">Tension Maximale</label>
                                     <input type="text" v-model="form.voltage_rating" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
                                     <div v-if="form.errors.voltage_rating" class="text-red-600 text-sm mt-1">{{ form.errors.voltage_rating }}</div>
                                 </div>
@@ -154,10 +148,10 @@ watch(() => form.type, () => {
                         </div>
 
                         <div v-if="form.type === 'microcontroller'" class="bg-gray-50 p-4 rounded-lg mb-6">
-                            <h3 class="font-semibold mb-4 text-gray-700">Microcontroller Specifications</h3>
+                            <h3 class="font-semibold mb-4 text-gray-700">Spécifications Microcontrôleur</h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700">Clock Speed</label>
+                                    <label class="block text-sm font-medium text-gray-700">Fréquence d'Horloge</label>
                                     <input type="text" v-model="form.clock_speed" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
                                     <div v-if="form.errors.clock_speed" class="text-red-600 text-sm mt-1">{{ form.errors.clock_speed }}</div>
                                 </div>
@@ -177,7 +171,7 @@ watch(() => form.type, () => {
                         <div class="flex justify-end">
                             <button
                                 type="submit"
-                                class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
+                                class="bg-[#94c24c] text-white px-6 py-2 rounded hover:bg-[#83a842] transition"
                                 :disabled="form.processing"
                             >
                                 {{ form.processing ? 'Saving...' : 'Save Component' }}

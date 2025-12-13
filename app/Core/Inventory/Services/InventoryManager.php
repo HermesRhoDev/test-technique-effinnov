@@ -7,7 +7,7 @@ use App\Core\Inventory\Factories\ComponentFactory;
 use App\Core\Inventory\Interfaces\ElectronicComponentInterface;
 use App\Models\Component as ComponentModel;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class InventoryManager
 {
@@ -46,7 +46,7 @@ class InventoryManager
             throw new \RuntimeException("Component with reference {$originalReference} not found.");
         }
 
-        // Check if new reference already exists (if changed)
+        // Check if new reference already exists
         if ($originalReference !== $updatedComponent->getReference() &&
             ComponentModel::where('reference', $updatedComponent->getReference())->exists()) {
             throw new \RuntimeException("Component with reference {$updatedComponent->getReference()} already exists.");
