@@ -18,13 +18,13 @@ Tout se trouve dans la branche: "dev/test-electronic-stock"
 
 ### 2. Configurer l'environnement
 
-Copiez le fichier d'exemple `.env.example` vers `.env` :
+Copier le fichier d'exemple `.env.example` vers `.env`:
 
 ```bash
 cp .env.example .env
 ```
 
-Ouvrez le fichier `.env` et modifiez la configuration de la base de données pour qu'elle corresponde aux paramètres Docker:
+Ouvrir le fichier `.env` et modifier la configuration de la base de données pour qu'elle corresponde aux paramètres Docker:
 
 ```ini
 DB_CONNECTION=mysql
