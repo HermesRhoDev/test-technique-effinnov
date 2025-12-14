@@ -107,3 +107,5 @@ Il faut **s'inscrire** sur la page d'accueil pour accéder à la gestion de l'in
 - Validation des données via FormRequests.
 - Architecture POO (Interfaces, Classes Abstraites/Concrète, Enumération...).
 - Mise en place de la consultation des produits via un catalogue produits publique
+- Mise en place de la pagination des produits
+- Ajout de tests unitaires (PublicCatalog, ResistorTest)
