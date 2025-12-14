@@ -53,6 +53,12 @@ defineProps<{
                             </Link>
                         </div>
                     </div>
+
+                    <div class="mt-8 border-t border-gray-100 pt-6">
+                        <Link :href="route('catalog.index')" class="text-[#94c24b] hover:underline font-medium text-lg">
+                            Consulter le catalogue de composants &rarr;
+                        </Link>
+                    </div>
                 </div>
             </main>
         </div>

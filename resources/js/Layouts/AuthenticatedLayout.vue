@@ -35,6 +35,13 @@ const showingNavigationDropdown = ref(false);
                 >
                     Inventaire
                 </NavLink>
+                <NavLink
+                    :href="route('catalog.index')"
+                    :active="route().current('catalog.*')"
+                    class="w-full justify-start px-4 py-2 text-white"
+                >
+                    Voir le catalogue
+                </NavLink>
             </div>
 
             <div class="p-4 border-t border-[#94c24c]">

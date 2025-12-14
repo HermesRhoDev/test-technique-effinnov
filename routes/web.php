@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\PublicCatalogController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -14,6 +15,9 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
+Route::get('/catalog', [PublicCatalogController::class, 'index'])->name('catalog.index');
+Route::get('/catalog/{reference}', [PublicCatalogController::class, 'show'])->name('catalog.show');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
