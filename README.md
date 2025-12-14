@@ -86,7 +86,7 @@ docker exec effinnov-app npm run build
 
 ### Première connexion
 
-⚠️ Lors du lancement des seeders, aucun utilisateur sera créé par défaut ⚠️
+⚠️ Lors du lancement des seeders, aucun utilisateur ne sera créé par défaut ⚠️
 
 Il faut **s'inscrire** sur la page d'accueil pour accéder à la gestion de l'inventaire.
 
