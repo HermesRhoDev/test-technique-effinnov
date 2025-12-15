@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head, Link, router } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import Pagination from '@/Components/Pagination.vue';
 import { ref, watch } from 'vue';
 
 const props = defineProps<{
@@ -43,10 +44,6 @@ const deleteComponent = (reference: string) => {
     if (confirm('Are you sure you want to delete this component?')) {
         router.delete(route('inventory.destroy', reference));
     }
-};
-
-const translateLabel = (label: string) => {
-    return label.replace('Previous', 'Précédent').replace('Next', 'Suivant');
 };
 </script>
 
@@ -134,24 +131,7 @@ const translateLabel = (label: string) => {
                         </div>
 
                         <!-- Pagination -->
-                        <div v-if="components.links.length > 3" class="flex justify-center mt-6">
-                            <div class="flex flex-wrap -mb-1">
-                                <template v-for="(link, key) in components.links" :key="key">
-                                    <div
-                                        v-if="link.url === null"
-                                        class="mr-1 mb-1 px-4 py-3 text-sm leading-4 text-gray-400 border rounded"
-                                        v-html="translateLabel(link.label)"
-                                    />
-                                    <Link
-                                        v-else
-                                        class="mr-1 mb-1 px-4 py-3 text-sm leading-4 border rounded hover:bg-[#94c24b] focus:border-indigo-500 focus:text-indigo-500"
-                                        :class="{ 'bg-[#94c24b] text-white': link.active, 'bg-white': !link.active }"
-                                        :href="link.url"
-                                        v-html="translateLabel(link.label)"
-                                    />
-                                </template>
-                            </div>
-                        </div>
+                        <Pagination :links="components.links" />
                     </div>
                 </div>
             </div>

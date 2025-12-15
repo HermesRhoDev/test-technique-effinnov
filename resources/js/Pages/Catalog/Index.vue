@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head, Link, router } from '@inertiajs/vue3';
 import PublicLayout from '@/Layouts/PublicLayout.vue';
+import Pagination from '@/Components/Pagination.vue';
 import { ref, watch } from 'vue';
 
 const props = defineProps<{
@@ -38,10 +39,6 @@ watch(selectedType, (value) => {
         }
     );
 });
-
-const translateLabel = (label: string) => {
-    return label.replace('Previous', 'Précédent').replace('Next', 'Suivant');
-};
 </script>
 
 <template>
@@ -102,24 +99,7 @@ const translateLabel = (label: string) => {
                 </div>
 
                 <!-- Pagination -->
-                <div v-if="components.links.length > 3" class="mt-8 flex justify-center">
-                    <div class="flex flex-wrap -mb-1">
-                        <template v-for="(link, key) in components.links" :key="key">
-                            <div
-                                v-if="link.url === null"
-                                class="mr-1 mb-1 px-4 py-3 text-sm leading-4 text-gray-400 border rounded"
-                                v-html="translateLabel(link.label)"
-                            />
-                            <Link
-                                v-else
-                                class="mr-1 mb-1 px-4 py-3 text-sm leading-4 border rounded hover:bg-white focus:border-[#94c24c] focus:text-[#94c24c]"
-                                :class="{ 'bg-[#94c24c] text-white': link.active, 'bg-white text-gray-700': !link.active }"
-                                :href="link.url"
-                                v-html="translateLabel(link.label)"
-                            />
-                        </template>
-                    </div>
-                </div>
+                <Pagination :links="components.links" />
             </div>
         </div>
     </PublicLayout>
